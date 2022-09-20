@@ -1,0 +1,16 @@
+def hist(test):    
+    word = test.lower()
+    freq = {}
+    i = 0
+  
+    for i in word:
+        if i in freq:
+            freq[i] += 1
+        else:
+            freq[i] = 1
+    return freq
+
+test = input("Type something: ")
+print(hist(test))
+
+#https://www.geeksforgeeks.org/internal-working-of-set-in-python/
