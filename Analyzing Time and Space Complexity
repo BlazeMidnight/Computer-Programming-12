@@ -1,0 +1,62 @@
+import time
+
+def histNiave(s):
+    out = ['']*256
+    index = 0
+    for l in range(256):
+        count = 0
+        char = chr(l)
+        for i in range(len(s)):
+            if(s[i] == char):
+                count += 1
+        if(count != 0):
+            out[index] = char+": "+str(count)+"\n"
+            index += 1
+    return out
+
+def histArray(s):
+    countTotal = [0]*256
+    for i in range(len(s)):
+        countTotal[ord(s[i])] += 1
+    return countTotal
+
+def histStruct(s):
+    countDict = {}
+    for i in range(len(s)):
+        if(s[i] not in countDict):
+            countDict[s[i]] = 0
+        countDict[s[i]] += 1
+    return countDict
+
+def hist(test):    
+    word = test.lower()
+    freq = {}
+    i = 0
+  
+    for i in word:
+        if i in freq:
+            freq[i] += 1
+        else:
+            freq[i] = 1
+    return freq
+
+def checkTime(func, data, N):
+    print("eval "+str(func))
+    total = 0
+    for i in range(N):
+        st = time.time()
+        out = func(data)
+        en = time.time()
+        print("\ttime elapsed ("+str(i+1)+"): "+str(en-st))
+        total += (en-st)
+    #print(out)
+    print("avg: "+str(total/N))
+    print("===========\n")
+
+user = input("Enter a sentence to evaluate: ")
+N = 100
+checkTime(histNiave, user, N)
+checkTime(histArray, user, N)
+checkTime(histStruct, user, N)
+checkTime(hist, user, N)
+
