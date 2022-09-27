@@ -5,7 +5,7 @@ import random
 print("~ Welcome! ~")
 print("==========")
 stones = -1
-stones = random.randrange(15, 35)
+stones = random.randint(15, 35)
 player = "PLY"
 user = ""
 historyDict = {}
@@ -45,7 +45,7 @@ while(True):
 
     if player == "COM":
         if stones <= 3:
-            ran = random.randrange(1, 3)
+            ran = random.randint(1, 3)
             if ran == 1 or ran == 2:
                 comp = stones
         else:
