@@ -1,0 +1,23 @@
+print("Hi I'm shopping buddy")
+
+while(True):
+    N = input("How many items on your list: ")
+    if N.isnumeric():
+        num = int(N)
+        break
+    else:
+        print("Please type a number")
+
+shoppingList = [""]*num
+i = 0
+while(i<len(shoppingList)):
+    user = input("Enter an item you need to shop: ")
+    if(len(user) == 0):
+        break
+
+    shoppingList[i] = user 
+    i+=1
+
+print("Your list as follows: ")
+for i in range(len(shoppingList)):
+    print("\t"+str(i+1)+". "+shoppingList[i])
