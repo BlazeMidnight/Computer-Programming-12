@@ -1,0 +1,63 @@
+from random import randint
+
+class MyArrayList:
+    arr = []
+
+    def __init__(self):
+        self.arr = [None]*10
+
+    def __str__(self): ##overriding
+        return "["+", ".join([str(a) for a in self.arr])+"]"
+
+    def get(self, index): ##index out of bound error thrown in the future
+        if(self.arr[index] != None):
+            return self.arr[index]
+
+    def set(self, element, index): ## index out of bounds error thrown in the future
+        if(self.arr[index] != None):
+            self.arr[index] = element
+
+    def size(self):
+        out = 0
+        for i in range(len(self.arr)):
+            if(self.arr[i] != None):
+                out += 1
+        return out
+
+    def isEmpty(self):
+        return a.size() == 0
+
+
+    def add(self, element): 
+        flag = True
+        for i in range(len(self.arr)):
+            if(self.arr[i] == None):
+                self.arr[i] = element
+                flag = False
+                break
+        if(flag):
+            newArr = [None]*(len(self.arr)*2)
+
+            for i in range(len(self.arr)):
+                if i != None:
+                    newArr.append(self.arr[i])
+                             
+            self.arr = newArr
+            
+            return self.arr
+
+    def remove(self, index): ##remove via index
+        for i in range(index,len(self.arr)-1):
+            self.arr[i] = self.arr[i+1]
+            if(self.arr[i] == None):
+                break
+
+a = MyArrayList()
+for i in range(5):
+    a.add(randint(1,9))
+print(a)
+print(a.add(1))
+print(a)
+    
+
+    
