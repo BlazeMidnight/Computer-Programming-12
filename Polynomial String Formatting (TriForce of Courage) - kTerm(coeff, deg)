@@ -1,0 +1,167 @@
+import sys
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+    
+def superscript(n):
+    out = ""
+    while(n>0):
+        v = n%10
+        if(v==1):
+            out = "\u00b9" + out
+        elif(v==2 or v==3):
+            out = chr(ord("\u00b0")+v) + out
+        else:
+            out = chr(ord("\u2070")+v) + out
+        n //= 10
+    return out
+
+def mkTerm(coeff, deg):
+    out = ""
+    coeff = abs(coeff)
+    if coeff != 1 or deg == 0:
+        out += str(coeff)
+    if deg > 0:
+        out += "x"
+    if deg > 1:
+        out += superscript(deg)
+    return out
+
+def formatPoly(coeffs):
+    out = ""
+    for i in range(len(coeffs)):
+        out += mkTerm(coeffs[i], coeffs[i+1])
+        
+    return out
+
+## mkTerm unit tests 
+mkTermTest = {
+    (-4, 0): "4",
+    (-3, 0): "3",
+    (-2, 0): "2",
+    (-1, 0): "1",
+    (1, 0): "1",
+    (2, 0): "2",
+    (3, 0): "3",
+    (4, 0): "4",
+    (-4, 1): "4x",
+    (-3, 1): "3x",
+    (-2, 1): "2x",
+    (-1, 1): "x",
+    (1, 1): "x",
+    (2, 1): "2x",
+    (3, 1): "3x",
+    (4, 1): "4x",
+    (-4, 2): "4x²",
+    (-3, 2): "3x²",
+    (-2, 2): "2x²",
+    (-1, 2): "x²",
+    (1, 2): "x²",
+    (2, 2): "2x²",
+    (3, 2): "3x²",
+    (4, 2): "4x²",
+    (-4, 3): "4x³",
+    (-3, 3): "3x³",
+    (-2, 3): "2x³",
+    (-1, 3): "x³",
+    (1, 3): "x³",
+    (2, 3): "2x³",
+    (3, 3): "3x³",
+    (4, 3): "4x³",
+    (-4, 4): "4x⁴",
+    (-3, 4): "3x⁴",
+    (-2, 4): "2x⁴",
+    (-1, 4): "x⁴",
+    (1, 4): "x⁴",
+    (2, 4): "2x⁴",
+    (3, 4): "3x⁴",
+    (4, 4): "4x⁴"
+    }
+## between -4 and 4 from degrees 0 to 4
+#print("mkTerm UNIT TESTs")
+'''
+for k in mkTermTest:
+    c = k[0]
+    d = k[1]
+    result = mkTerm(c,d)
+    expected = mkTermTest[k]
+    if(result == expected):
+        print("test coeff: "+str(c)+", deg: "+str(d)+" -- passed")
+    else:
+        eprint("\ntest coeff: "+str(c)+", deg: "+str(d)+" -- failed")
+        eprint("\texpected: "+expected+"\tgot: "+str(result))
+        input("...press enter to continue testing")
+    print()
+'''
+
+## poly format unit Test
+polyUnitTest = {
+    str([1]): "1",
+    str([-1]): "-1",
+    str([2]): "2",
+    str([-2]): "-2",
+    str([0, 1]): "x",
+    str([0, -1]): "-x",
+    str([1, 1]): "x + 1",
+    str([-1, 1]): "x - 1",
+    str([1, -1]): "-x + 1",
+    str([-1, -1]): "-x - 1",
+    str([2, 1]): "x + 2",
+    str([-2, 1]): "x - 2",
+    str([2, -1]): "-x + 2",
+    str([-2, -1]): "-x - 2",
+    str([0, 2]): "2x",
+    str([0, -2]): "-2x",
+    str([1, 2]): "2x + 1",
+    str([-1, 2]): "2x - 1",
+    str([1, -2]): "-2x + 1",
+    str([-1, -2]): "-2x - 1",
+    str([2, 2]): "2x + 2",
+    str([-2, 2]): "2x - 2",
+    str([2, -2]): "-2x + 2",
+    str([-2, -2]): "-2x - 2",
+    str([0, 0, 1]): "x²",
+    str([0, 0, -1]): "-x²",
+    str([-1, -2, 1]): "x² - 2x - 1",
+    str([-1, -1, -2]): "-2x² - x - 1",
+    str([-1, 0, 0, -1]): "-x³ - 1",
+    str([2, 0, 0, 1]): "x³ + 2",
+    str([2, -2, 0, 1]): "x³ - 2x + 2",
+    str([-1, -1, 0, 2]): "2x³ - x - 1",
+    str([1, 1, 0, -2]): "-2x³ + x + 1",
+    str([2, 0, 1, 2]): "2x³ + x² + 2",
+    str([-2, 0, 1, 2]): "2x³ + x² - 2",
+    str([2, 0, 1, 0, -1]): "-x⁴ + x² + 2",
+    str([-2, 0, 1, 0, -1]): "-x⁴ + x² - 2",
+    str([0, 0, 0, -1, 1]): "x⁴ - x³",
+    str([-1, -2, -2, -1, 1]): "x⁴ - x³ - 2x² - 2x - 1",
+    str([-1, -2, 0, -2, -1]): "-x⁴ - 2x³ - 2x - 1",
+    str([1, -1, -1, 2, 1]): "x⁴ + 2x³ - x² - x + 1",
+    str([-1, 1, -1, 0, -2]): "-2x⁴ - x² + x - 1",
+    str([-2, 0, -2, 0, 2]): "2x⁴ - 2x² - 2",
+    str([-1, -1, 0, 1, 2]): "2x⁴ + x³ - x - 1",
+    str([2, 1, -2, -1, -2]): "-2x⁴ - x³ - 2x² + x + 2",
+    str([-2, 0, 2, -2, 2]): "2x⁴ - 2x³ + 2x² - 2",
+    str([1, -1, -2, 2, -2]): "-2x⁴ + 2x³ - 2x² - x + 1",
+    str([-2, -2, -2, -2, -2]): "-2x⁴ - 2x³ - 2x² - 2x - 2",
+    str([1/3, 5/6, 7/9]): "0.78x² + 0.83x + 0.33",
+    str([-3, -4/5, 2, -1]): "-x³ + 2x² - 0.8x - 3",
+    str([-1/9, 2, 0, 1, -1]): "-x⁴ + x³ + 2x - 0.11",
+    str([2/3, 7/3, 8/3, 9/3]): "3.0x³ + 2.67x² + 2.33x + 0.67",
+    str([3/3, 4/4]): "x + 1.0"
+    }
+## tests a small subset of the cases
+## floating point numbers have a bit more leeway
+print("formatPoly UNIT TESTS")
+for k in polyUnitTest:
+    coeffs = [float(x) if x.find(".")>=0 else int(x) for x in k[1:-1].split(", ")]
+    result = formatPoly(coeffs)
+    expected = polyUnitTest[k]
+    if(result == expected):
+        print("test coeffs: "+k+" -- passed")
+    else:
+        eprint("\ntest coeffs: "+k+" -- failed")
+        eprint("\texpected: "+expected+"\tgot:"+str(result))
+        input("... press enter to continue testing")
+    
+
+        
