@@ -1,0 +1,95 @@
+from math import log10
+
+class Node:
+    __data = None
+    __nxt = None
+    def __init__(self, data, nxt=None):
+        self.__data = data
+        self.__nxt = nxt
+
+    def __str__(self):
+        d = self.__data
+        n = self.__nxt
+
+        return "Data: "+str(d)+" >> "+str(type(n))
+
+    def hasNext(self):
+        return self.__nxt != None
+
+    def getNext(self):
+        return self.__nxt
+    def setNext(self, nxt):
+        self.__nxt = nxt
+
+    def getData(self):
+        return self.__data
+    def setData(self, data):
+        self.__data = data
+
+class myLinkedList:
+    __head = None
+    __size = 0
+
+    def __init__(self):
+        self.__head = None
+        
+
+    def __str__(self):
+        curr = self.__head
+        out = "<0> ... "
+        if(curr != None):
+            out += str(curr)
+
+        i = 1
+        while(curr.hasNext()):
+            curr = curr.getNext()
+            out += "\n<"+str(i)+"> "+("..."[int(log10(i)):])+" "+str(curr)
+        return out
+
+    def add(self, element):
+        newNode = Node(element)
+        if self.__head == None:
+            self.__head = newNode
+        curr = self.__head
+        while(curr.hasNext()):
+            curr = curr.getNext()
+        curr.setNext(newNode)
+        self.__size += 1
+        return
+ 
+    def remove(self):
+        return
+
+    def get(self, element):
+        item = self.__head
+        while item != None:
+           if item.getData() == element:
+               return item
+           else:
+                item = item.getNext()
+        return None
+
+    def set(self, oldElement, element):
+        return
+
+    def isEmpty(self):
+        return self.__head == None 
+
+    def size(self):
+        return self.__size
+
+LL = myLinkedList()
+LL.add(3)
+LL.add(4)
+LL.add(5)
+
+print(LL)
+
+
+    ##include functions
+    ##add, remove, get, set, isEmpty, size
+
+
+
+    
+
