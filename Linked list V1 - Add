@@ -50,10 +50,12 @@ class myLinkedList:
         newNode = Node(element)
         if self.__head == None:
             self.__head = newNode
-        curr = self.__head
-        while(curr.hasNext()):
-            curr = curr.getNext()
-        curr.setNext(newNode)
+
+        else:
+            curr = self.__head
+            while(curr.hasNext()):
+                curr = curr.getNext()
+            curr.setNext(newNode)
         self.__size += 1
         return
  
@@ -82,6 +84,14 @@ LL = myLinkedList()
 LL.add(3)
 LL.add(4)
 LL.add(5)
+LL.add(4)
+LL.add(5)
+LL.add(4)
+LL.add(5)
+LL.add(2)
+LL.add(5)
+print(LL.size())
+
 
 print(LL)
 
