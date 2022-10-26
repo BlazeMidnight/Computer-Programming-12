@@ -1,7 +1,0 @@
-curr = self.__head
-        newNode = Node(element)
-        while curr.getData() is not old:
-            curr = curr.getNext()
-        newNode = newNode.setNext(curr.getData())
-        curr = curr.setNext(newNode)
-        return
