@@ -1,0 +1,178 @@
+
+from math import log10
+
+class Node:
+    __data = None
+    __nxt = None
+    __prev = None
+    def __init__(self, data, nxt=None, prev=None):
+        self.__data = data
+        self.__nxt = nxt
+        self.__prev = prev
+
+    def __str__(self):
+        d = self.__data
+        n = self.__nxt
+        p = self.__prev
+
+        return "Data: "+str(d)+" >> "+str(type(n))
+
+    def hasNext(self):
+        return self.__nxt != None
+
+    def getNext(self):
+        return self.__nxt
+    def setNext(self, nxt):
+        self.__nxt = nxt
+
+    def getPrev(self):
+        return self.__prev
+    def setPrev(self, prev):
+        self.__prev = prev
+
+    def getData(self):
+        return self.__data
+    def setData(self, data):
+        self.__data = data
+
+class myLinkedList:
+    __head = None
+    __prev = None
+    __size = 0
+
+    def __init__(self):
+        self.__head = None
+        
+
+    def __str__(self):
+        curr = self.__head
+        out = "<0> ... "
+        if(curr != None):
+            out += str(curr)+" "+str(curr.getPrev())+" "+str(curr.getNext()) 
+
+        i = 1
+        while(i < self.size()):
+        #while(curr.hasNext()):
+            curr = curr.getNext()
+            out += "\n<"+str(i)+"> "+("..."[int(log10(i)):])+" "+str(curr)+" "+str(curr.getPrev())+" "+str(curr.getNext())    
+            i += 1
+        return out
+
+    def add(self, element):
+        newNode = Node(element)
+        if self.__head == None:
+            self.__head = newNode
+            self.__head.setPrev(None)
+            self.__head.setNext(self.__head)
+            self.__size += 1
+            return
+        if self.size() == 1:
+            newNode.setPrev(self.__head)
+            newNode.setNext(self.__head)
+            self.__head.setNext(newNode)
+            self.__head.setPrev(newNode)
+            self.__size += 1
+            return
+
+        tail = self.__head.getPrev()
+        tail.setNext(newNode)
+        newNode.setPrev(tail)
+        newNode.setNext(self.__head)
+        self.__head.setPrev(newNode)
+        self.__size += 1
+        return
+ 
+    def remove(self, index):
+        if index > self.__size or index < 0:
+            raise IndexError("Please make sure you index input is correct.")
+        if self.__size == 1:
+            seld.__head = None
+            self.__size = 0
+            return
+        
+        if index == 0:
+            self.__head.getNext().setPrev(self.__head.getPrev)
+            self.__head.getPrev().setNext(self.__head.getNext)
+            self.__head.setPrev(None)
+            self.__size -= 1
+            return
+        
+        if index == self.__size-1:
+            tail = self.__head.getPrev()
+            self.__head.setPrev(tail.getPrev)
+            tail.getPrev().setNext(self.__head)
+            self.__size -= 1
+            
+        curr = self.__head
+        prev = self.__prev
+        for i in range(self.__size):
+            if(i == index):
+                curr.getNext().setPrev(curr.getPrev())
+                curr.getPrev().setNext(curr.getNext())
+                self.__size -= 1
+                return
+            else:
+                prev = curr
+                curr = curr.getNext()
+    
+
+    def get(self, index):
+        curr = self.__head
+        while curr.getData() is not index:
+            if curr == None:
+                return None
+            curr = curr.getNext()
+        return curr.getData()
+
+    def set(self, element, index):
+        newNode = Node(element)
+        if index > self.__size:
+            return
+        if index == 0:
+            newNode.setPrev(self.__head.getPrev())
+            newNode.setNext(self.__head.getNext())
+            self.__head.getPrev().setNext(newNode)
+            self.__head.getNext().setPrev(newNode)
+            self.__head = newNode
+            return
+        
+        if index == self.__size - 1:
+            tail = self.__head.getPrev()
+            newNode.setPrev(tail.getPrev())
+            newNode.setNext(tail.getNext())
+            self.__head.setPrev(newNode)
+            tail.getPrev().setNext(newNode)
+            return
+        
+        curr = self.__head
+        for i in range(self.__size):
+            if(i == index):
+                curr.getPrev().setNext(newNode)
+                curr.getNext().setPrev(newNode)
+                newNode.setPrev(curr.getPrev())
+                newNode.setNext(curr.getNext())
+                curr.setData(element)
+                return
+            else:
+                curr = curr.getNext()
+
+    def isEmpty(self):
+        return self.__head == None 
+
+    def size(self):
+        return self.__size
+    
+    
+
+
+LL = myLinkedList()
+LL.add(3)
+LL.add(4)
+LL.add(5)
+LL.add(6)
+LL.add(7)
+LL.add(8)
+LL.add(9)
+print(LL)
+print()
+
