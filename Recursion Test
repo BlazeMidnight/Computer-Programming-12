@@ -1,0 +1,23 @@
+def isPrime(n):
+    return isPrimeH(2, n)
+    
+def isPrimeH(i, n):
+    if(i*i > n):
+        return True
+    if(n % i == 0):
+        return False
+    return isPrimeH(i+1, n)
+    
+def isSquare(n):
+    return isSquareH(0, n)
+    
+def isSquareH(i, n):
+    if i*i > n:
+        return False 
+    if i*i == n:
+        return True
+    return isSquareH(i+1, n)
+    
+def  
+
+print(isSquare(25))
