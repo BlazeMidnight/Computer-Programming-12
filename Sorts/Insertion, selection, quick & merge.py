@@ -1,6 +1,6 @@
 arr = [3, 2, 5, 7, 1, 4, 6, 9, 8]
 
-def insertionSort(arr):
+def insertionSort(arr): 
     for i in range(1, len(arr)):
         key = arr[i]
         j = i-1
@@ -8,7 +8,6 @@ def insertionSort(arr):
                 arr[j+1] = arr[j]
                 j -= 1
         arr[j+1] = key
-
 
 def selectionSort(arr):
     size = len(arr)
