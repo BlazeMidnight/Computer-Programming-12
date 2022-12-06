@@ -36,35 +36,28 @@ def quickSortH(arr, low, high):
         quickSortH(arr, pi + 1, high))
 
 def mergeSort(arr):
-    if len(arr) > 1:
-        mid = len(arr)//2
-        left = arr[:mid]
-        right = arr[mid:]
-        mergeSort(left)
-        mergeSort(right) 
-        lenLeft = 0
-        lenRight = 0
-        lenArr = 0
-
-        while lenLeft < len(left) and lenRight < len(right):
-            if left[lenLeft] < right[lenRight]:
-                arr[lenArr] = left[lenLeft]
-                lenLeft += 1
-            else:
-                arr[lenArr] = right[lenRight]
-                lenRight += 1
-            lenArr += 1
-
-        while lenLeft < len(left):
-            arr[lenArr] = left[lenLeft]
-            lenLeft += 1
-            lenArr += 1
-
-        while lenRight < len(right):
-            arr[lenArr] = right[lenRight]
-            lenRight += 1
-            lenArr += 1
+  if len(arr) <= 1:
     return arr
+  mid = len(arr) // 2
+  l = mergeSort(arr[:mid])
+  r = mergeSort(arr[mid:])
+  return mergeSortH(l, r)
+
+def mergeSortH(left, right):
+  result = []
+  while (left and right):
+    if left[0] < right[0]:
+      result.append(left[0])
+      left.pop(0)
+    else:
+      result.append(right[0])
+      right.pop(0)
+
+  if left:
+    result += left
+  if right:
+    result += right
+  return result
             
 arr = [0,1,3,5,7,9,2,4,6,8] 
 print(mergeSort(arr)) 
