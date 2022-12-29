@@ -81,14 +81,14 @@ def randomPartition(arr, low, high, compareFunc):
     arr[r], arr[high] = arr[high], arr[r]
     return partition(arr, low, high, compareFunc)
 
-def quicksort(arr, other, low, high, compareFunc, nut):
+def quickSort(arr, other, low, high, compareFunc, nut):
     if low < high:
         if nut == True:
             p = randomPartition(arr, low, high, compareFunc)
         else:
             p = randomPartition(arr, low, high, compareFunc)
-        quicksort(arr, other, low, p - 1, compareFunc, nut)
-        quicksort(arr, other, p + 1, high, compareFunc, nut)
+        quickSort(arr, other, low, p - 1, compareFunc, nut)
+        quickSort(arr, other, p + 1, high, compareFunc, nut)
 
 def matchNutsAndBolts(nuts, bolts):
     def nut_compare(nut, bolt):
@@ -97,8 +97,8 @@ def matchNutsAndBolts(nuts, bolts):
     def bolt_compare(bolt, nut):
         return bolt.testNut(nut)
 
-    quicksort(nuts, bolts, 0, len(nuts) - 1, nut_compare, True)
-    quicksort(bolts, nuts, 0, len(bolts) - 1, bolt_compare, False)
+    quickSort(nuts, bolts, 0, len(nuts) - 1, nut_compare, True)
+    quickSort(bolts, nuts, 0, len(bolts) - 1, bolt_compare, False)
 
     return nuts, bolts  ##return the nuts and bolts list sorted
 ## ==============================================
