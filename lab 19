@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+int rec(int num, int fact) {
+	if (num != 1) {
+		fact = fact * num; 
+		rec(num - 1, fact);
+	} 
+	else {
+		return fact; 
+	} 
+}
+
+int factor(int n) {
+	if (n == 0)
+		return 1;
+	else
+		return n * factor(n - 1); 
+}
+
+
+int fib(int n) {
+	if (n == 0) {
+		return 0; 
+	}
+	else if (n == 1){
+		return 1;
+	} 
+	else {
+		return fib(n - 1) + fib(n-2); 
+	}
+}
+
+
+
+int main() {
+	int num;
+	int fact = 1;
+
+	cout << "Enter an interger: ";
+	cin >> num;
+	for (int i = 1; i <= num; i++) {
+		fact = fact * i;
+	}
+
+	cout << "==============" << endl;
+	cout << num << "! = " << fact << endl; 
+	cout << "==============" << endl;
+	cout << num << "! = " << rec(num, 1) << endl;
+	cout << "==============" << endl;
+	cout << num << "! = " << factor(num) << endl;
+	cout << "==============" << endl;
+	cout << num << "th term of fib = " << fib(num) << endl;
+
+
+	return 0;
+}
